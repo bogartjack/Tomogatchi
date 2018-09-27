@@ -1,8 +1,11 @@
+html, body{height: 100%}
+
 #tomogatchi {
 	display: block;
 	position: absolute;
 	left: 50%;
-	top: 50%;
+	top: 55%;
+	z-index: 10000;
 	transform: translate(-50%, -50%);
 }
 
@@ -12,11 +15,17 @@
 
 .action-button{
 	height:100%;
+	width: 10%;
+	position: left;
+	background-color: grey;
 }
 
 .statusBar{
-	height:20%;
+	position: relative;
+	height:22.5%;
+	width: 10%;
 	background-color: black;
+	display:black;
 }
 
 #hunger{
