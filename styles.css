@@ -10,22 +10,24 @@ html, body{height: 100%}
 }
 
 #intro{
-	height:10%;
+	height:5%;
 }
 
 .action-button{
-	height:100%;
-	width: 10%;
+	height: 5%;
+	width: 25%;
 	position: left;
 	background-color: grey;
+	display: inline-block;
+	float: left;
 }
 
 .statusBar{
-	position: relative;
-	height:22.5%;
-	width: 10%;
+	float: left;
+	height: 5%;
+	width: 25%;
 	background-color: black;
-	display:black;
+	display:inline-block;
 }
 
 #hunger{
