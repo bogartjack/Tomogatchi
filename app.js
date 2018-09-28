@@ -5,7 +5,7 @@ let age =0;
 let sleepinessLevel =0;
 let boredomLevel = 0;
 let hungerLevel = 0;
-
+let intervalID = null;
 class Tomagotchi{
 	constructor(name){
 		this.name = name;
@@ -15,17 +15,22 @@ class Tomagotchi{
 	}
 }
 
-setInterval( play = () => {
-	sleepiness = sleepiness*1.1;
-	boredom = boredom*1.15;
-	hunger = hunger*1.2;
-	age += 500/3000;
-	grow(age);
-	sleep(sleepiness);
-	bored(boredom);
-	hungry(hunger);
+const interval = (flag) => {
+	if(flag){
+	intervalID = setInterval(() => {
 
-}, 500)
+		sleepiness = sleepiness*1.1;
+		boredom = boredom*1.15;
+		hunger = hunger*1.2;
+		age += 500/3000;
+		grow(age);
+		sleep(sleepiness);
+		bored(boredom);
+		hungry(hunger);
+
+	}, 500)}
+	else { clearInterval(intervalID); }
+}
 
 const grow = (size) =>{
 //	console.log(size);
@@ -39,6 +44,9 @@ const sleep = (slp) =>{
 	sleepinessLevel = slp/8.5;
 	$('#sleepiness').css('height', (slp) +5+ '%');	
 	$('#sleepiness').text(Math.floor(sleepinessLevel)+1);
+	if (slp > 85){
+		restartGame();
+	}
 }
 
 const bored = (brd) =>{
@@ -46,6 +54,9 @@ const bored = (brd) =>{
 	boredomLevel = brd/8.5;
 	$('#boredom').css('height', (brd) + 5 + '%');
 	$('#boredom').text(Math.floor(boredomLevel)+1);
+	if (brd > 85){
+		restartGame();
+	}
 }
 
 const hungry = (hng) =>{
@@ -54,28 +65,56 @@ const hungry = (hng) =>{
 	console.log('level'+hungerLevel);
 	$('#hunger').css('height', (hng) + 5 + '%');
 	$('#hunger').text(Math.floor(hungerLevel)+1);
+	if (hng>85){
+		restartGame();
+	}
 }
 
-const interact = () => {
+const restartGame = () => {
+	interval(false);
+	alert('You let your gotch die! Press okay to try again!');
+	sleepiness =1;
+	boredom =1;
+	hunger =1;
+	age =0;
+	sleepinessLevel =0;
+	boredomLevel = 0;
+	hungerLevel = 0;
+	interval(true);
+}
 
+const interact = (gotchName) => {
+	
 	console.log('doohickey');
 	$('#hunger-button').on('click', () => {
 		if(hunger > 8.5){
 			hunger-=8.5;
 			$('#hunger').css('height', hunger + 5 + '%');
 		}
-	
+		
+		else{
+
+		}
 	});
 	$('#sleep-button').on('click', () => {
 		if (sleepiness > 8.5){
 			sleepiness-=8.5;
 			$('#sleepiness').css('height', sleepiness + 5 + '%');
 		}
+		
+		else{
+
+		}
 	});
 	$('#bored-button').on('click', () => {
 		if (boredom > 8.5){
 			boredom-=8.5;
 			$('#boredom').css('height', boredom +5 + '%');
+		}
+		
+		else{
+	
+
 		}
 	});
 	('#evolve-button').on('click', () => {
@@ -88,8 +127,8 @@ const startGame = () =>{
 	$('#tomogatchi').html('<circle cx ="25" cy ="25" r="25" fill ="red"></circle>');
 	const tom = new Tomagotchi(name);
 	$('#intro').html('<p>make sure to feed, play, or put ' + tom.name + ' to sleep<br/></p><p>He will grow if you keep him alive!</p>');
-	play();
-	interact();
+	interval(true);
+	interact(tom.name);
 
 }
 
